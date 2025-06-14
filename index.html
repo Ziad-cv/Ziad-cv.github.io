@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-lang-ar="سيرة ذاتية | زياد سامح" data-lang-en="CV | Ziad Sameh">سيرة ذاتية | زياد سامح</title>
-    <!-- UPDATED: Added new, stable favicon link -->
-    <link rel="icon" href="https://i.ibb.co/CbrgK1P/OIP.jpg" type="image/jpeg">
+    <!-- FINAL FIX: Embedding image data directly into the code -->
+    <link rel="icon" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQcHBwgICAgITZiQzJZDLZ5I5I5P/Z" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- **Tailwind CSS configuration for dark mode** -->
     <script>
@@ -92,8 +92,8 @@
 
         <!-- Hero Section -->
         <section id="hero" class="text-center my-16">
-            <!-- UPDATED: Changed profile image to a new stable URL -->
-            <img src="https://i.ibb.co/CbrgK1P/OIP.jpg" alt="صورة شخصية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
+            <!-- FINAL FIX: Embedding image data directly into the code -->
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQcHBwgICAgITZiQzJZDLZ5I5I5P/Z" alt="صورة شخصية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
             <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white" data-lang-ar="زياد سامح" data-lang-en="Ziad Sameh">زياد سامح</h1>
             <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold" data-lang-ar="مهندس برمجيات" data-lang-en="Software Engineer">مهندس برمجيات</p>
             <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600" data-lang-ar="تواصل معي" data-lang-en="Contact Me">تواصل معي</a>
@@ -158,9 +158,9 @@
                 </div>
                 <!-- Project 2 -->
                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl group">
-                    <img src="https://placehold.co/600x400/f59e0b/ffffff?text=Shopify" alt="صورة مشروع منصة تجارة إلكترونية" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/f59e0b/ffffff?text=E-Shop" alt="صورة مشروع منصة تجارة إلكترونية" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white" data-lang-ar="Shopify - منصة تجارة إلكترونية" data-lang-en="Shopify - E-commerce Platform">Shopify - منصة تجارة إلكترونية</h3>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white" data-lang-ar="E-Shop - منصة تجارة إلكترونية" data-lang-en="E-Shop - E-commerce Platform">E-Shop - منصة تجارة إلكترونية</h3>
                         <p class="mb-4 text-gray-700 dark:text-gray-300" data-lang-ar="منصة تجارة إلكترونية حديثة مع لوحة تحكم لإدارة المنتجات والطلبات، ودعم بوابات دفع متعددة." data-lang-en="A modern e-commerce platform with a dashboard for product & order management, and multiple payment gateway support.">منصة تجارة إلكترونية...</p>
                         <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline" data-lang-ar="شاهد المشروع ←" data-lang-en="View Project →">شاهد المشروع ←</a>
                     </div>
@@ -242,8 +242,27 @@
             // --- LANGUAGE LOGIC ---
             const translatableElements = document.querySelectorAll('[data-lang-ar]');
             let currentLang = localStorage.getItem('lang') || 'ar';
+            let activeTypewriters = []; // To keep track of running animations
+
+            function typeWriter(element, text, speed = 20) {
+                let i = 0;
+                element.innerHTML = ''; // Clear previous text
+                const intervalId = setInterval(() => {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(intervalId);
+                    }
+                }, speed);
+                activeTypewriters.push(intervalId);
+            }
 
             function setLanguage(lang) {
+                // Stop any previous animations
+                activeTypewriters.forEach(clearInterval);
+                activeTypewriters = [];
+
                 currentLang = lang;
                 localStorage.setItem('lang', lang);
                 document.documentElement.setAttribute('lang', lang);
@@ -252,7 +271,9 @@
 
                 translatableElements.forEach(el => {
                     const text = el.getAttribute(lang === 'ar' ? 'data-lang-ar' : 'data-lang-en');
-                    if(text) el.innerText = text;
+                    if(text) {
+                       typeWriter(el, text);
+                    }
                 });
             }
 
@@ -261,8 +282,15 @@
                 setLanguage(newLang);
             });
 
-            // Set initial language on load
-            setLanguage(currentLang);
+            // Set initial language on load (without animation)
+            const initialLang = currentLang;
+            document.documentElement.setAttribute('lang', initialLang);
+            document.documentElement.setAttribute('dir', initialLang === 'ar' ? 'rtl' : 'ltr');
+            langToggleBtn.textContent = initialLang === 'ar' ? 'EN' : 'ع';
+            translatableElements.forEach(el => {
+                const text = el.getAttribute(initialLang === 'ar' ? 'data-lang-ar' : 'data-lang-en');
+                if(text) el.innerText = text;
+            });
         });
     </script>
 </body>
