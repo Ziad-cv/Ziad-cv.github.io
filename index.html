@@ -28,7 +28,6 @@
     </style>
     <script>
         // This script is placed in the head to apply the dark theme immediately, preventing a "flash" of the light theme.
-        // It checks if the user has a stored preference, or respects their system's color scheme.
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -38,8 +37,8 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" type="button" class="fixed top-4 left-4 z-50 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-transform duration-200 active:scale-90">
+    <!-- Theme Toggle Button - Using inline style for z-index to guarantee it's on top -->
+    <button id="theme-toggle" type="button" style="z-index: 9999;" class="fixed top-4 left-4 cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-transform duration-200 active:scale-90">
         <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
         <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"></path></svg>
     </button>
@@ -191,41 +190,40 @@
         <p>&copy; 2025 | تم تصميمه بواسطة [اكتب اسمك هنا]</p>
     </footer>
 
-    <!-- FINAL JAVASCRIPT SOLUTION -->
+    <!-- FINAL JAVASCRIPT SOLUTION (SIMPLIFIED & MORE ROBUST) -->
     <script>
-        // Wait for the entire page content to be loaded before running the script
-        window.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const darkIcon = document.getElementById('theme-toggle-dark-icon');
-            const lightIcon = document.getElementById('theme-toggle-light-icon');
-            
-            // Function to update which icon is shown
-            const updateIcons = (isDark) => {
-                if (isDark) {
-                    darkIcon.classList.add('hidden');
-                    lightIcon.classList.remove('hidden');
-                } else {
-                    darkIcon.classList.remove('hidden');
-                    lightIcon.classList.add('hidden');
-                }
-            };
+        // This function updates the icons based on whether 'dark' class is present
+        function updateButtonIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+        }
+        
+        // Run the function once on page load to set the initial icon correctly
+        updateButtonIcons();
 
-            // Set the initial icon state when the page loads
-            updateIcons(document.documentElement.classList.contains('dark'));
+        // Add a click listener to the button
+        themeToggleBtn.addEventListener('click', function () {
+            // Toggle the .dark class on the <html> element
+            document.documentElement.classList.toggle('dark');
             
-            // Add the click event listener to the button
-            themeToggleBtn.addEventListener('click', () => {
-                // Toggle the 'dark' class on the root <html> element
-                const isDark = document.documentElement.classList.toggle('dark');
-                
-                // Update localStorage with the new state
-                localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
-                
-                // Update the icons to reflect the new state
-                updateIcons(isDark);
-            });
+            // Check if dark mode is now active and update localStorage
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+            }
             
+            // Update the icons to reflect the new state
+            updateButtonIcons();
         });
     </script>
 </body>
