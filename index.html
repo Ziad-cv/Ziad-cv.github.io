@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* Use a more specific selector for the font to avoid conflicts */
+        body, h1, h2, h3, h4, h5, h6 {
             font-family: 'Tajawal', sans-serif;
         }
         /* Custom class for smooth scrolling */
@@ -20,20 +21,34 @@
             font-weight: 900; /* Boldest weight for titles */
         }
     </style>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-500">
 
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" type="button" class="fixed top-4 left-4 z-50 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"></path></svg>
+    </button>
+    
     <!-- Header & Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-teal-700">
+            <div class="text-2xl font-bold text-teal-700 dark:text-teal-400">
                 <a href="#">[اسمك]</a>
             </div>
             <div class="hidden md:flex space-x-8 space-x-reverse">
-                <a href="#about" class="text-gray-600 hover:text-teal-600">من أنا</a>
-                <a href="#experience" class="text-gray-600 hover:text-teal-600">الخبرة</a>
-                <a href="#portfolio" class="text-gray-600 hover:text-teal-600">الأعمال</a>
-                <a href="#contact" class="text-gray-600 hover:text-teal-600">التواصل</a>
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">من أنا</a>
+                <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">الخبرة</a>
+                <a href="#portfolio" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">الأعمال</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">التواصل</a>
             </div>
             <div class="md:hidden">
                 <!-- Mobile menu button can be added here if needed -->
@@ -46,26 +61,26 @@
 
         <!-- Hero Section -->
         <section id="hero" class="text-center my-16">
-            <img src="https://placehold.co/150x150/667eea/ffffff?text=صورتك" alt="صورة شخصية احترافية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 shadow-lg">
-            <h1 class="text-5xl font-extrabold mt-6 mb-2">[اكتب اسمك الكامل هنا]</h1>
-            <p class="text-2xl text-teal-600 font-semibold">[مُسماك الوظيفي، مثال: مهندس برمجيات]</p>
+            <img src="https://placehold.co/150x150/667eea/ffffff?text=صورتك" alt="صورة شخصية احترافية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
+            <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white">[اكتب اسمك الكامل هنا]</h1>
+            <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold">[مُسماك الوظيفي، مثال: مهندس برمجيات]</p>
             <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600 transition duration-300">تواصل معي</a>
         </section>
 
         <!-- About Me Section -->
-        <section id="about" class="bg-white p-8 rounded-lg shadow-md my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-6 text-center text-teal-700">من أنا</h2>
-            <p class="text-lg leading-relaxed max-w-3xl mx-auto text-center">
+        <section id="about" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
+            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400">من أنا</h2>
+            <p class="text-lg leading-relaxed max-w-3xl mx-auto text-center text-gray-700 dark:text-gray-300">
                 [اكتب هنا نبذة تعريفية جذابة عنك. تحدث عن شغفك، أهم مهاراتك، والقيمة التي يمكنك إضافتها. اجعلها قصة قصيرة ومُلهمة تترك انطباعًا قويًا لدى القارئ.]
             </p>
         </section>
 
         <!-- Experience Section -->
         <section id="experience" class="my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-12 text-center text-teal-700">الخبرة العملية والتعليم</h2>
+            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400">الخبرة العملية والتعليم</h2>
             <div class="relative max-w-3xl mx-auto">
                 <!-- Vertical line -->
-                <div class="absolute left-1/2 h-full w-1 bg-teal-200 transform -translate-x-1/2"></div>
+                <div class="absolute left-1/2 h-full w-1 bg-teal-200 dark:bg-teal-800 transform -translate-x-1/2"></div>
 
                 <!-- Job 1 -->
                 <div class="mb-8 flex justify-between items-center w-full">
@@ -73,11 +88,11 @@
                     <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
                         <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
                     </div>
-                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500">[التاريخ، مثال: 2021 - حتى الآن]</p>
-                        <h3 class="mb-3 font-bold text-gray-800 text-xl">[المسمى الوظيفي]</h3>
-                        <p class="font-semibold text-teal-600 mb-2">[اسم الشركة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">
+                    <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2021 - حتى الآن]</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي]</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة]</p>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300 text-opacity-100">
                             [وصف موجز للمهام والإنجازات الرئيسية. ركز على النتائج.]
                         </p>
                     </div>
@@ -89,11 +104,11 @@
                     <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
                         <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
                     </div>
-                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500">[التاريخ، مثال: 2019 - 2021]</p>
-                        <h3 class="mb-3 font-bold text-gray-800 text-xl">[المسمى الوظيفي السابق]</h3>
-                        <p class="font-semibold text-teal-600 mb-2">[اسم الشركة السابقة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">
+                    <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2019 - 2021]</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي السابق]</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة السابقة]</p>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300 text-opacity-100">
                             [وصف موجز للمهام والإنجازات الرئيسية في هذا الدور.]
                         </p>
                     </div>
@@ -105,45 +120,44 @@
                     <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
                          <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
                     </div>
-                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500">[سنة التخرج]</p>
-                        <h3 class="mb-3 font-bold text-gray-800 text-xl">[اسم الشهادة، مثال: بكالوريوس في علوم الحاسب]</h3>
-                        <p class="font-semibold text-teal-600 mb-2">[اسم الجامعة]</p>
+                    <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">[سنة التخرج]</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[اسم الشهادة، مثال: بكالوريوس في علوم الحاسب]</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الجامعة]</p>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- Portfolio Section -->
-        <section id="portfolio" class="bg-white p-8 rounded-lg shadow-md my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-12 text-center text-teal-700">معرض الأعمال</h2>
+        <section id="portfolio" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
+            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400">معرض الأعمال</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
-                <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
                     <img src="https://placehold.co/600x400/34d399/ffffff?text=المشروع+الأول" alt="صورة المشروع الأول" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">[اسم المشروع الأول]</h3>
-                        <p class="mb-4">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 font-semibold hover:underline">شاهد المشروع &rarr;</a>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الأول]</h3>
+                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
+                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
                     <img src="https://placehold.co/600x400/60a5fa/ffffff?text=المشروع+الثاني" alt="صورة المشروع الثاني" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">[اسم المشروع الثاني]</h3>
-                        <p class="mb-4">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 font-semibold hover:underline">شاهد المشروع &rarr;</a>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الثاني]</h3>
+                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
+                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
                    <img src="https://placehold.co/600x400/c084fc/ffffff?text=المشروع+الثالث" alt="صورة المشروع الثالث" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">[اسم المشروع الثالث]</h3>
-                        <p class="mb-4">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 font-semibold hover:underline">شاهد المشروع &rarr;</a>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الثالث]</h3>
+                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
+                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -151,15 +165,15 @@
 
         <!-- Contact Section -->
         <section id="contact" class="my-16 text-center scroll-mt-20">
-            <h2 class="section-title text-3xl mb-6 text-teal-700">للتواصل</h2>
-            <p class="text-lg max-w-2xl mx-auto mb-8">
+            <h2 class="section-title text-3xl mb-6 text-teal-700 dark:text-teal-400">للتواصل</h2>
+            <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-700 dark:text-gray-300">
                 أنا متحمس دائمًا لمناقشة المشاريع الجديدة أو فرص العمل. لا تتردد في التواصل معي.
             </p>
             <div class="flex justify-center items-center space-x-6 space-x-reverse">
-                <a href="mailto:[بريدك الإلكتروني]" class="text-teal-600 hover:text-teal-800 text-lg font-semibold">[بريدك الإلكتروني]</a>
-                <span class="text-gray-300">|</span>
-                <a href="[رابط ملفك على لينكدإن]" target="_blank" class="text-teal-600 hover:text-teal-800 text-lg font-semibold">LinkedIn</a>
-                <span class="text-gray-300">|</span>
+                <a href="mailto:[بريدك الإلكتروني]" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">[بريدك الإلكتروني]</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a href="[رابط ملفك على لينكدإن]" target="_blank" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">LinkedIn</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
                  <a href="[رابط ملف PDF لسيرتك الذاتية]" target="_blank" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-800 transition duration-300">تحميل السيرة الذاتية (PDF)</a>
             </div>
         </section>
@@ -167,9 +181,51 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center p-6 mt-16">
+    <footer class="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 text-white text-center p-6 mt-16">
         <p>&copy; 2025 | تم تصميمه بواسطة [اكتب اسمك هنا]</p>
     </footer>
 
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+            
+        });
+    </script>
 </body>
 </html>
