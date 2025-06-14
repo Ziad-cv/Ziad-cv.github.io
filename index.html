@@ -48,6 +48,17 @@
         .dark::view-transition-new(root) { z-index: 999; }
         ::view-transition-old(root) { z-index: 999; }
         ::view-transition-new(root) { z-index: 1; }
+        
+        /* FINAL TOUCH: Scroll Animation Styles */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
     <script>
         // Apply theme immediately on load
@@ -91,8 +102,8 @@
     <main class="container mx-auto px-6 py-12">
 
         <!-- Hero Section -->
-        <section id="hero" class="text-center my-16">
-            <!-- FINAL IMAGE FIX: Using the new image link -->
+        <section id="hero" class="text-center my-16 fade-in-section">
+            <!-- UPDATED: Using the new image link -->
             <img src="https://png.pngtree.com/element_our/20200702/ourmid/pngtree-cartoon-character-business-person-image_2287332.jpg" alt="صورة شخصية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
             <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white" data-lang-ar="زياد سامح" data-lang-en="Ziad Sameh">زياد سامح</h1>
             <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold" data-lang-ar="مهندس برمجيات" data-lang-en="Software Engineer">مهندس برمجيات</p>
@@ -100,13 +111,13 @@
         </section>
 
         <!-- About Me Section -->
-        <section id="about" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
+        <section id="about" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20 fade-in-section">
             <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400" data-lang-ar="من أنا" data-lang-en="About Me">من أنا</h2>
             <p class="text-lg leading-relaxed max-w-3xl mx-auto text-center text-gray-700 dark:text-gray-300" data-lang-ar="مهندس برمجيات شغوف بتحويل الأفكار المعقدة إلى حلول تقنية أنيقة وفعالة. أمتلك خبرة في تطوير تطبيقات الويب المتكاملة، مع التركيز على كتابة كود نظيف وقابل للتطوير وتقديم تجربة مستخدم استثنائية." data-lang-en="A passionate software engineer dedicated to transforming complex ideas into elegant and efficient technical solutions. Experienced in full-stack web application development, with a focus on writing clean, scalable code and delivering an exceptional user experience.">مهندس برمجيات شغوف...</p>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="my-16 scroll-mt-20">
+        <section id="experience" class="my-16 scroll-mt-20 fade-in-section">
             <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400" data-lang-ar="الخبرة العملية والتعليم" data-lang-en="Experience & Education">الخبرة العملية والتعليم</h2>
             <div class="relative max-w-3xl mx-auto">
                 <div class="absolute left-1/2 h-full w-1 bg-teal-200 dark:bg-teal-800 transform -translate-x-1/2"></div>
@@ -143,7 +154,7 @@
         </section>
 
         <!-- Portfolio Section -->
-        <section id="portfolio" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
+        <section id="portfolio" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20 fade-in-section">
             <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400" data-lang-ar="معرض الأعمال" data-lang-en="Portfolio">معرض الأعمال</h2>
             <!-- UPDATED: Added 3 realistic projects -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -178,7 +189,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="my-16 text-center scroll-mt-20">
+        <section id="contact" class="my-16 text-center scroll-mt-20 fade-in-section">
             <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400" data-lang-ar="للتواصل" data-lang-en="Contact">للتواصل</h2>
             <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-700 dark:text-gray-300" data-lang-ar="أنا متحمس دائمًا لمناقشة المشاريع الجديدة أو فرص العمل. لا تتردد في التواصل معي." data-lang-en="I'm always excited to discuss new projects or job opportunities. Feel free to get in touch.">أنا متحمس...</p>
              <!-- FIXED: Replaced space-x with gap-x for better LTR/RTL spacing -->
@@ -199,7 +210,7 @@
 
     <!-- JAVASCRIPTS -->
     <script>
-        // --- THEME & LANGUAGE SWITCHER LOGIC ---
+        // --- THEME, LANGUAGE, AND ANIMATION LOGIC ---
         window.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('theme-toggle');
             const langToggleBtn = document.getElementById('lang-toggle');
@@ -242,11 +253,11 @@
             // --- LANGUAGE LOGIC ---
             const translatableElements = document.querySelectorAll('[data-lang-ar]');
             let currentLang = localStorage.getItem('lang') || 'ar';
-            let activeTypewriters = []; // To keep track of running animations
+            let activeTypewriters = [];
 
             function typeWriter(element, text, speed = 20) {
                 let i = 0;
-                element.innerHTML = ''; // Clear previous text
+                element.innerHTML = '';
                 const intervalId = setInterval(() => {
                     if (i < text.length) {
                         element.innerHTML += text.charAt(i);
@@ -258,8 +269,7 @@
                 activeTypewriters.push(intervalId);
             }
 
-            function setLanguage(lang) {
-                // Stop any previous animations
+            function setLanguage(lang, withAnimation = true) {
                 activeTypewriters.forEach(clearInterval);
                 activeTypewriters = [];
 
@@ -272,24 +282,35 @@
                 translatableElements.forEach(el => {
                     const text = el.getAttribute(lang === 'ar' ? 'data-lang-ar' : 'data-lang-en');
                     if(text) {
-                       typeWriter(el, text);
+                       if (withAnimation) {
+                           typeWriter(el, text);
+                       } else {
+                           el.innerText = text;
+                       }
                     }
                 });
             }
 
             langToggleBtn.addEventListener('click', () => {
                 const newLang = currentLang === 'ar' ? 'en' : 'ar';
-                setLanguage(newLang);
+                setLanguage(newLang, true);
             });
 
-            // Set initial language on load (without animation)
-            const initialLang = currentLang;
-            document.documentElement.setAttribute('lang', initialLang);
-            document.documentElement.setAttribute('dir', initialLang === 'ar' ? 'rtl' : 'ltr');
-            langToggleBtn.textContent = initialLang === 'ar' ? 'EN' : 'ع';
-            translatableElements.forEach(el => {
-                const text = el.getAttribute(initialLang === 'ar' ? 'data-lang-ar' : 'data-lang-en');
-                if(text) el.innerText = text;
+            setLanguage(currentLang, false); // Initial load without animation
+
+            // --- SCROLL ANIMATION LOGIC ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
             });
         });
     </script>
