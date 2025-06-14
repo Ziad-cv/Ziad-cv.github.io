@@ -26,11 +26,42 @@
         .section-title {
             font-weight: 900; /* Boldest weight for titles */
         }
-        /* ADDED FOR SMOOTH TRANSITION */
-        /* This makes all color changes smooth across all elements */
-        * {
+
+        /* --- STYLES FOR VIEW TRANSITION API (RIPPLE EFFECT) --- */
+
+        /* We remove the generic transition because the API handles it now */
+        /* * {
             transition: background-color 0.5s ease, color 0.3s ease, border-color 0.5s ease;
+        } */
+        
+        @keyframes reveal-in {
+            from { clip-path: circle(0% at var(--x) var(--y)); }
+            to { clip-path: circle(150% at var(--x) var(--y)); }
         }
+        
+        ::view-transition-new(root) {
+            animation: reveal-in 0.7s ease-in-out;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-direction: normal;
+            mix-blend-mode: normal;
+        }
+
+        .dark::view-transition-old(root) {
+             z-index: 1;
+        }
+        .dark::view-transition-new(root) {
+            z-index: 999;
+        }
+        ::view-transition-old(root) {
+             z-index: 999;
+        }
+        ::view-transition-new(root) {
+            z-index: 1;
+        }
+
     </style>
     <script>
         // This script is placed in the head to apply the dark theme immediately, preventing a "flash" of the light theme.
@@ -41,7 +72,7 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-500">
 
     <!-- Theme Toggle Button - Using inline style for z-index to guarantee it's on top -->
     <button id="theme-toggle" type="button" style="z-index: 9999;" class="fixed top-4 left-4 cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-transform duration-200 active:scale-90">
@@ -75,7 +106,7 @@
             <img src="https://placehold.co/150x150/667eea/ffffff?text=صورتك" alt="صورة شخصية احترافية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
             <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white">[اكتب اسمك الكامل هنا]</h1>
             <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold">[مُسماك الوظيفي، مثال: مهندس برمجيات]</p>
-            <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600 transition duration-300">تواصل معي</a>
+            <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600">تواصل معي</a>
         </section>
 
         <!-- About Me Section -->
@@ -103,7 +134,7 @@
                         <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2021 - حتى الآن]</p>
                         <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي]</h3>
                         <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300 text-opacity-100">
+                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300">
                             [وصف موجز للمهام والإنجازات الرئيسية. ركز على النتائج.]
                         </p>
                     </div>
@@ -119,7 +150,7 @@
                         <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2019 - 2021]</p>
                         <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي السابق]</h3>
                         <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة السابقة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300 text-opacity-100">
+                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300">
                             [وصف موجز للمهام والإنجازات الرئيسية في هذا الدور.]
                         </p>
                     </div>
@@ -176,7 +207,7 @@
 
         <!-- Contact Section -->
         <section id="contact" class="my-16 text-center scroll-mt-20">
-            <h2 class="section-title text-3xl mb-6 text-teal-700 dark:text-teal-400">للتواصل</h2>
+            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400">للتواصل</h2>
             <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-700 dark:text-gray-300">
                 أنا متحمس دائمًا لمناقشة المشاريع الجديدة أو فرص العمل. لا تتردد في التواصل معي.
             </p>
@@ -185,7 +216,7 @@
                 <span class="text-gray-300 dark:text-gray-600">|</span>
                 <a href="[رابط ملفك على لينكدإن]" target="_blank" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">LinkedIn</a>
                 <span class="text-gray-300 dark:text-gray-600">|</span>
-                 <a href="[رابط ملف PDF لسيرتك الذاتية]" target="_blank" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-800 transition duration-300">تحميل السيرة الذاتية (PDF)</a>
+                 <a href="[رابط ملف PDF لسيرتك الذاتية]" target="_blank" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-800">تحميل السيرة الذاتية (PDF)</a>
             </div>
         </section>
 
@@ -196,13 +227,12 @@
         <p>&copy; 2025 | تم تصميمه بواسطة [اكتب اسمك هنا]</p>
     </footer>
 
-    <!-- FINAL JAVASCRIPT SOLUTION (SIMPLIFIED & MORE ROBUST) -->
+    <!-- JAVASCRIPT FOR THEME TOGGLE WITH RIPPLE EFFECT -->
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const darkIcon = document.getElementById('theme-toggle-dark-icon');
         const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-        // This function updates the icons based on whether 'dark' class is present
         function updateButtonIcons() {
             if (document.documentElement.classList.contains('dark')) {
                 darkIcon.classList.add('hidden');
@@ -213,24 +243,40 @@
             }
         }
         
-        // Run the function once on page load to set the initial icon correctly
         updateButtonIcons();
 
-        // Add a click listener to the button
-        themeToggleBtn.addEventListener('click', function () {
-            // Toggle the .dark class on the <html> element
-            document.documentElement.classList.toggle('dark');
-            
-            // Check if dark mode is now active and update localStorage
-            if (document.documentElement.classList.contains('dark')) {
+        themeToggleBtn.addEventListener('click', function (event) {
+            // Check if the browser supports the View Transitions API
+            if (!document.startViewTransition) {
+                // Fallback for older browsers
+                toggleTheme();
+                updateButtonIcons();
+                return;
+            }
+
+            // Get the click position
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Set the custom properties for the animation origin
+            document.documentElement.style.setProperty('--x', x + 'px');
+            document.documentElement.style.setProperty('--y', y + 'px');
+
+            // Start the transition
+            const transition = document.startViewTransition(() => {
+                toggleTheme();
+                updateButtonIcons();
+            });
+        });
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            if (isDark) {
                 localStorage.setItem('color-theme', 'dark');
             } else {
                 localStorage.setItem('color-theme', 'light');
             }
-            
-            // Update the icons to reflect the new state
-            updateButtonIcons();
-        });
+        }
     </script>
 </body>
 </html>
