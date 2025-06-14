@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<!-- The lang and dir attributes will be set by JavaScript -->
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سيرة ذاتية | [اكتب اسمك هنا]</title>
+    <title data-lang-ar="سيرة ذاتية | زياد سامح" data-lang-en="CV | Ziad Sameh">سيرة ذاتية | زياد سامح</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- **الإصلاح النهائي: إضافة هذا السكريبت لإخبار Tailwind باستخدام وضع الكلاس** -->
+    <!-- **Tailwind CSS configuration for dark mode** -->
     <script>
         tailwind.config = {
           darkMode: 'class',
@@ -13,58 +14,41 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Use a more specific selector for the font to avoid conflicts */
-        body, h1, h2, h3, h4, h5, h6, a, p, div {
+        /* Define fonts for each language */
+        :lang(ar) body, :lang(ar) h1, :lang(ar) h2, :lang(ar) h3, :lang(ar) p, :lang(ar) a, :lang(ar) div {
             font-family: 'Tajawal', sans-serif;
         }
-        /* Custom class for smooth scrolling */
+        :lang(en) body, :lang(en) h1, :lang(en) h2, :lang(en) h3, :lang(en) p, :lang(en) a, :lang(en) div {
+            font-family: 'Poppins', sans-serif;
+        }
         html {
             scroll-behavior: smooth;
         }
         .section-title {
-            font-weight: 900; /* Boldest weight for titles */
+            font-weight: 900;
         }
-
         /* --- STYLES FOR VIEW TRANSITION API (RIPPLE EFFECT) --- */
-
-        /* We remove the generic transition because the API handles it now */
-        /* * {
-            transition: background-color 0.5s ease, color 0.3s ease, border-color 0.5s ease;
-        } */
-        
         @keyframes reveal-in {
             from { clip-path: circle(0% at var(--x) var(--y)); }
             to { clip-path: circle(150% at var(--x) var(--y)); }
         }
-        
         ::view-transition-new(root) {
             animation: reveal-in 0.7s ease-in-out;
         }
-
         ::view-transition-old(root),
         ::view-transition-new(root) {
             animation-direction: normal;
             mix-blend-mode: normal;
         }
-
-        .dark::view-transition-old(root) {
-             z-index: 1;
-        }
-        .dark::view-transition-new(root) {
-            z-index: 999;
-        }
-        ::view-transition-old(root) {
-             z-index: 999;
-        }
-        ::view-transition-new(root) {
-            z-index: 1;
-        }
-
+        .dark::view-transition-old(root) { z-index: 1; }
+        .dark::view-transition-new(root) { z-index: 999; }
+        ::view-transition-old(root) { z-index: 999; }
+        ::view-transition-new(root) { z-index: 1; }
     </style>
     <script>
-        // This script is placed in the head to apply the dark theme immediately, preventing a "flash" of the light theme.
+        // Apply theme immediately on load
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -74,26 +58,28 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-500">
 
-    <!-- Theme Toggle Button - Using inline style for z-index to guarantee it's on top -->
+    <!-- Theme Toggle Button -->
     <button id="theme-toggle" type="button" style="z-index: 9999;" class="fixed top-4 left-4 cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-transform duration-200 active:scale-90">
-        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"></path></svg>
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"></path></svg>
+    </button>
+    
+    <!-- Language Toggle Button -->
+    <button id="lang-toggle" type="button" style="z-index: 9999;" class="fixed top-4 right-4 cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 font-bold transition-transform duration-200 active:scale-90">
+        EN
     </button>
     
     <!-- Header & Navigation -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-teal-700 dark:text-teal-400">
-                <a href="#">[اسمك]</a>
+                <a href="#" data-lang-ar="زياد سامح" data-lang-en="Ziad Sameh">زياد سامح</a>
             </div>
-            <div class="hidden md:flex space-x-8 space-x-reverse">
-                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">من أنا</a>
-                <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">الخبرة</a>
-                <a href="#portfolio" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">الأعمال</a>
-                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400">التواصل</a>
-            </div>
-            <div class="md:hidden">
-                <!-- Mobile menu button can be added here if needed -->
+            <div class="hidden md:flex space-x-8 md:space-x-reverse">
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400" data-lang-ar="من أنا" data-lang-en="About Me">من أنا</a>
+                <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400" data-lang-ar="الخبرة" data-lang-en="Experience">الخبرة</a>
+                <a href="#portfolio" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400" data-lang-ar="الأعمال" data-lang-en="Portfolio">الأعمال</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400" data-lang-ar="التواصل" data-lang-en="Contact">التواصل</a>
             </div>
         </nav>
     </header>
@@ -103,69 +89,50 @@
 
         <!-- Hero Section -->
         <section id="hero" class="text-center my-16">
-            <img src="https://placehold.co/150x150/667eea/ffffff?text=صورتك" alt="صورة شخصية احترافية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
-            <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white">[اكتب اسمك الكامل هنا]</h1>
-            <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold">[مُسماك الوظيفي، مثال: مهندس برمجيات]</p>
-            <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600">تواصل معي</a>
+            <img src="https://placehold.co/150x150/a0aec0/ffffff?text=ZS" alt="صورة شخصية" class="w-40 h-40 mx-auto rounded-full object-cover border-4 border-teal-500 dark:border-teal-400 shadow-lg">
+            <h1 class="text-5xl font-extrabold mt-6 mb-2 text-gray-900 dark:text-white" data-lang-ar="زياد سامح" data-lang-en="Ziad Sameh">زياد سامح</h1>
+            <p class="text-2xl text-teal-600 dark:text-teal-400 font-semibold" data-lang-ar="مهندس برمجيات" data-lang-en="Software Engineer">مهندس برمجيات</p>
+            <a href="#contact" class="mt-8 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600" data-lang-ar="تواصل معي" data-lang-en="Contact Me">تواصل معي</a>
         </section>
 
         <!-- About Me Section -->
         <section id="about" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400">من أنا</h2>
-            <p class="text-lg leading-relaxed max-w-3xl mx-auto text-center text-gray-700 dark:text-gray-300">
-                [اكتب هنا نبذة تعريفية جذابة عنك. تحدث عن شغفك، أهم مهاراتك، والقيمة التي يمكنك إضافتها. اجعلها قصة قصيرة ومُلهمة تترك انطباعًا قويًا لدى القارئ.]
-            </p>
+            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400" data-lang-ar="من أنا" data-lang-en="About Me">من أنا</h2>
+            <p class="text-lg leading-relaxed max-w-3xl mx-auto text-center text-gray-700 dark:text-gray-300" data-lang-ar="مهندس برمجيات شغوف بتحويل الأفكار المعقدة إلى حلول تقنية أنيقة وفعالة. أمتلك خبرة في تطوير تطبيقات الويب المتكاملة، مع التركيز على كتابة كود نظيف وقابل للتطوير وتقديم تجربة مستخدم استثنائية." data-lang-en="A passionate software engineer dedicated to transforming complex ideas into elegant and efficient technical solutions. Experienced in full-stack web application development, with a focus on writing clean, scalable code and delivering an exceptional user experience.">مهندس برمجيات شغوف...</p>
         </section>
 
         <!-- Experience Section -->
         <section id="experience" class="my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400">الخبرة العملية والتعليم</h2>
+            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400" data-lang-ar="الخبرة العملية والتعليم" data-lang-en="Experience & Education">الخبرة العملية والتعليم</h2>
             <div class="relative max-w-3xl mx-auto">
-                <!-- Vertical line -->
                 <div class="absolute left-1/2 h-full w-1 bg-teal-200 dark:bg-teal-800 transform -translate-x-1/2"></div>
-
                 <!-- Job 1 -->
                 <div class="mb-8 flex justify-between items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
-                        <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
-                    </div>
+                    <div class="order-1 w-5/12"></div><div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full"><h1 class="mx-auto font-semibold text-lg text-white">1</h1></div>
                     <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2021 - حتى الآن]</p>
-                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي]</h3>
-                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300">
-                            [وصف موجز للمهام والإنجازات الرئيسية. ركز على النتائج.]
-                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400" data-lang-ar="2022 - حتى الآن" data-lang-en="2022 - Present">2022 - حتى الآن</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl" data-lang-ar="مهندس برمجيات أول" data-lang-en="Senior Software Engineer">مهندس برمجيات أول</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2" data-lang-ar="شركة تكوين للحلول" data-lang-en="Tech Solutions Inc.">شركة تكوين للحلول</p>
+                        <p class="text-sm leading-snug text-gray-700 dark:text-gray-300" data-lang-ar="قيادة تطوير الميزات الجديدة لتطبيق الشركة الأساسي، مما أدى إلى تحسين الأداء بنسبة 20%." data-lang-en="Led the development of new features for the core application, resulting in a 20% performance improvement.">قيادة تطوير...</p>
                     </div>
                 </div>
-
                 <!-- Job 2 -->
                 <div class="mb-8 flex justify-between flex-row-reverse items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
-                        <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
-                    </div>
+                    <div class="order-1 w-5/12"></div><div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full"><h1 class="mx-auto text-white font-semibold text-lg">2</h1></div>
                     <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">[التاريخ، مثال: 2019 - 2021]</p>
-                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[المسمى الوظيفي السابق]</h3>
-                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الشركة السابقة]</p>
-                        <p class="text-sm leading-snug tracking-wide text-gray-700 dark:text-gray-300">
-                            [وصف موجز للمهام والإنجازات الرئيسية في هذا الدور.]
-                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400" data-lang-ar="2020 - 2022" data-lang-en="2020 - 2022">2020 - 2022</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl" data-lang-ar="مطور ويب" data-lang-en="Web Developer">مطور ويب</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2" data-lang-ar="استديو الويب الإبداعي" data-lang-en="Creative Web Studio">استديو الويب الإبداعي</p>
+                        <p class="text-sm leading-snug text-gray-700 dark:text-gray-300" data-lang-ar="بناء وتخصيص مواقع وتطبيقات ويب للعملاء في مختلف الصناعات." data-lang-en="Built and customized web applications and sites for clients across various industries.">بناء وتخصيص...</p>
                     </div>
                 </div>
-                
                 <!-- Education -->
                 <div class="mb-8 flex justify-between items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full">
-                         <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
-                    </div>
+                    <div class="order-1 w-5/12"></div><div class="z-20 flex items-center order-1 bg-teal-500 shadow-xl w-8 h-8 rounded-full"><h1 class="mx-auto font-semibold text-lg text-white">3</h1></div>
                     <div class="order-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">[سنة التخرج]</p>
-                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl">[اسم الشهادة، مثال: بكالوريوس في علوم الحاسب]</h3>
-                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2">[اسم الجامعة]</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400" data-lang-ar="سنة التخرج: 2020" data-lang-en="Graduation Year: 2020">سنة التخرج: 2020</p>
+                        <h3 class="mb-3 font-bold text-gray-900 dark:text-white text-xl" data-lang-ar="بكالوريوس في علوم الحاسب" data-lang-en="B.Sc. in Computer Science">بكالوريوس في علوم الحاسب</h3>
+                        <p class="font-semibold text-teal-600 dark:text-teal-400 mb-2" data-lang-ar="جامعة القاهرة" data-lang-en="Cairo University">جامعة القاهرة</p>
                     </div>
                 </div>
             </div>
@@ -173,33 +140,15 @@
 
         <!-- Portfolio Section -->
         <section id="portfolio" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md my-16 scroll-mt-20">
-            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400">معرض الأعمال</h2>
+            <h2 class="section-title text-3xl mb-12 text-center text-teal-700 dark:text-teal-400" data-lang-ar="معرض الأعمال" data-lang-en="Portfolio">معرض الأعمال</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl">
-                    <img src="https://placehold.co/600x400/34d399/ffffff?text=المشروع+الأول" alt="صورة المشروع الأول" class="w-full h-48 object-cover">
+                    <img src="https://placehold.co/600x400/34d399/ffffff?text=Project+1" alt="صورة المشروع الأول" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الأول]</h3>
-                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl">
-                    <img src="https://placehold.co/600x400/60a5fa/ffffff?text=المشروع+الثاني" alt="صورة المشروع الثاني" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الثاني]</h3>
-                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-xl">
-                   <img src="https://placehold.co/600x400/c084fc/ffffff?text=المشروع+الثالث" alt="صورة المشروع الثالث" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">[اسم المشروع الثالث]</h3>
-                        <p class="mb-4 text-gray-700 dark:text-gray-300">[وصف قصير للمشروع، التقنيات المستخدمة، ودورك فيه.]</p>
-                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline">شاهد المشروع &rarr;</a>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white" data-lang-ar="نظام إدارة المهام" data-lang-en="Task Management System">نظام إدارة المهام</h3>
+                        <p class="mb-4 text-gray-700 dark:text-gray-300" data-lang-ar="تطبيق ويب يساعد الفرق على تنظيم مهامهم ومتابعة تقدم المشاريع بفعالية." data-lang-en="A web application to help teams organize their tasks and track project progress efficiently.">تطبيق ويب...</p>
+                        <a href="#" class="text-teal-500 dark:text-teal-400 font-semibold hover:underline" data-lang-ar="شاهد المشروع ←" data-lang-en="View Project →">شاهد المشروع ←</a>
                     </div>
                 </div>
             </div>
@@ -207,76 +156,90 @@
 
         <!-- Contact Section -->
         <section id="contact" class="my-16 text-center scroll-mt-20">
-            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400">للتواصل</h2>
-            <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-700 dark:text-gray-300">
-                أنا متحمس دائمًا لمناقشة المشاريع الجديدة أو فرص العمل. لا تتردد في التواصل معي.
-            </p>
-            <div class="flex justify-center items-center space-x-6 space-x-reverse">
-                <a href="mailto:[بريدك الإلكتروني]" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">[بريدك الإلكتروني]</a>
+            <h2 class="section-title text-3xl mb-6 text-center text-teal-700 dark:text-teal-400" data-lang-ar="للتواصل" data-lang-en="Contact">للتواصل</h2>
+            <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-700 dark:text-gray-300" data-lang-ar="أنا متحمس دائمًا لمناقشة المشاريع الجديدة أو فرص العمل. لا تتردد في التواصل معي." data-lang-en="I'm always excited to discuss new projects or job opportunities. Feel free to get in touch.">أنا متحمس...</p>
+            <div class="flex justify-center items-center space-x-6 md:space-x-reverse">
+                <a href="mailto:your.email@example.com" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">[بريدك الإلكتروني]</a>
                 <span class="text-gray-300 dark:text-gray-600">|</span>
-                <a href="[رابط ملفك على لينكدإن]" target="_blank" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">LinkedIn</a>
+                <a href="#" target="_blank" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-lg font-semibold">LinkedIn</a>
                 <span class="text-gray-300 dark:text-gray-600">|</span>
-                 <a href="[رابط ملف PDF لسيرتك الذاتية]" target="_blank" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-800">تحميل السيرة الذاتية (PDF)</a>
+                 <a href="#" target="_blank" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-full hover:bg-gray-800" data-lang-ar="تحميل السيرة الذاتية" data-lang-en="Download CV">تحميل السيرة الذاتية</a>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 text-white text-center p-6 mt-16">
-        <p>&copy; 2025 | تم تصميمه بواسطة [اكتب اسمك هنا]</p>
+        <p data-lang-ar="© 2025 | تم تصميمه بواسطة زياد سامح" data-lang-en="© 2025 | Designed by Ziad Sameh">© 2025 | تم تصميمه بواسطة زياد سامح</p>
     </footer>
 
-    <!-- JAVASCRIPT FOR THEME TOGGLE WITH RIPPLE EFFECT -->
+    <!-- JAVASCRIPTS -->
     <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        // --- THEME & LANGUAGE SWITCHER LOGIC ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const langToggleBtn = document.getElementById('lang-toggle');
+            
+            // --- THEME LOGIC ---
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-        function updateButtonIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                darkIcon.classList.add('hidden');
-                lightIcon.classList.remove('hidden');
-            } else {
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
+            function updateThemeIcons() {
+                if (document.documentElement.classList.contains('dark')) {
+                    darkIcon.classList.add('hidden');
+                    lightIcon.classList.remove('hidden');
+                } else {
+                    darkIcon.classList.remove('hidden');
+                    lightIcon.classList.add('hidden');
+                }
             }
-        }
-        
-        updateButtonIcons();
+            updateThemeIcons();
 
-        themeToggleBtn.addEventListener('click', function (event) {
-            // Check if the browser supports the View Transitions API
-            if (!document.startViewTransition) {
-                // Fallback for older browsers
-                toggleTheme();
-                updateButtonIcons();
-                return;
-            }
+            themeToggleBtn.addEventListener('click', function (event) {
+                const isTransitionSupported = document.startViewTransition;
+                const toggle = () => {
+                    const isDark = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+                    updateThemeIcons();
+                };
 
-            // Get the click position
-            const x = event.clientX;
-            const y = event.clientY;
+                if (!isTransitionSupported) {
+                    toggle();
+                    return;
+                }
 
-            // Set the custom properties for the animation origin
-            document.documentElement.style.setProperty('--x', x + 'px');
-            document.documentElement.style.setProperty('--y', y + 'px');
-
-            // Start the transition
-            const transition = document.startViewTransition(() => {
-                toggleTheme();
-                updateButtonIcons();
+                const x = event.clientX;
+                const y = event.clientY;
+                document.documentElement.style.setProperty('--x', x + 'px');
+                document.documentElement.style.setProperty('--y', y + 'px');
+                document.startViewTransition(toggle);
             });
-        });
 
-        function toggleTheme() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            if (isDark) {
-                localStorage.setItem('color-theme', 'dark');
-            } else {
-                localStorage.setItem('color-theme', 'light');
+            // --- LANGUAGE LOGIC ---
+            const translatableElements = document.querySelectorAll('[data-lang-ar]');
+            let currentLang = localStorage.getItem('lang') || 'ar';
+
+            function setLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('lang', lang);
+                document.documentElement.setAttribute('lang', lang);
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                langToggleBtn.textContent = lang === 'ar' ? 'EN' : 'ع';
+
+                translatableElements.forEach(el => {
+                    const text = el.getAttribute(lang === 'ar' ? 'data-lang-ar' : 'data-lang-en');
+                    if(text) el.innerText = text;
+                });
             }
-        }
+
+            langToggleBtn.addEventListener('click', () => {
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                setLanguage(newLang);
+            });
+
+            // Set initial language on load
+            setLanguage(currentLang);
+        });
     </script>
 </body>
 </html>
